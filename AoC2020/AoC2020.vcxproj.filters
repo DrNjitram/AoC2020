@@ -13,15 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="2017">
+      <UniqueIdentifier>{b4dbfd3d-f416-4827-b872-a3fb054bbdfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2017_8.cpp">
+    <ClCompile Include="Warmup\2017_9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input\day8_2017.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <Text Include="Warmup\input\day8_2017.txt" />
+    <Text Include="Warmup\input\day9_2017.txt" />
   </ItemGroup>
 </Project>
