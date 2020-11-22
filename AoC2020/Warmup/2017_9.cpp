@@ -16,83 +16,30 @@ int calculate_score(string input) {
 	 // < opens garbage, then ignore any character that is not >
 	 // > closes garbage
 	 // ! ignore next character
-	string filtered_string = "";
 
 	//cout << "Start: " << input << endl;
 
-	//remove ignored chars
-	bool done_removing_exclamation = false;
-
-	while (!done_removing_exclamation) {
-		for (int i = 0; i < input.size(); i++) {
-			if (input[i] == '!') {
-				i++;
-			}
-			else {
-				filtered_string += input[i];
-			}
-		}
-
-		done_removing_exclamation = count(filtered_string.begin(), filtered_string.end(), '!') == 0;
-
-		if (!done_removing_exclamation) {
-			input = filtered_string;
-			filtered_string = "";
-		}
-	}
-
-	//cout << "Removed !: " << filtered_string << endl;
-
-
-	//remove garbage
-	input = filtered_string;
-	filtered_string = "";
-
+	int level = 0;
+	int score = 0;
 	int garbage = 0;
 
+
 	for (int i = 0; i < input.size(); i++) {
-		if (input[i] == '<') {
+		if (input[i] == '!') {
+			i++;
+		}
+		else if (input[i] == '<') {
 			while (input[i] != '>') {
-				i++;
-				garbage++;
+				if (input[i] == '!') 
+					i += 2;
+				else {
+					i++;
+					garbage++;
+				}		
 			}
 			garbage--;
 		}
-		else {
-			filtered_string += input[i];
-		}
-	}
-
-	//cout << "Removed garbage: " << filtered_string << endl;
-
-
-	//remove empty groups
-	input = filtered_string;
-	filtered_string = "";
-
-
-	for (int i = 0; i < input.size(); i++) {
-		if (input[i] == ',') {
-			while (input[i] == ',')
-				i++;
-			if (input[i--] != '}')
-				filtered_string += ",";
-		}
-		else {
-			filtered_string += input[i];
-		}
-	}
-
-	//cout << "Removed ,: " << filtered_string << endl;
-
-	input = filtered_string;
-
-	int level = 0;
-	int score = 0;
-
-
-	for (int i = 0; i < input.size(); i++) {
-		if (input[i] == '{') {
+		else if (input[i] == '{') {
 			level++;
 		}
 		else if (input[i] == '}') {
