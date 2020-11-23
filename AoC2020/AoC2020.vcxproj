@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Warmup\2017_9.cpp" />
+    <ClCompile Include="Warmup\2017_10.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Warmup\input\day8_2017.txt" />

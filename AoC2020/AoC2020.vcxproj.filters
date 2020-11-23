@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Warmup\2017_9.cpp">
+    <ClCompile Include="Warmup\2017_10.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

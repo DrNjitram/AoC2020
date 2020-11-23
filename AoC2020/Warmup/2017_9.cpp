@@ -10,7 +10,7 @@
 using namespace std;
 
 int calculate_score(string input) {
-	// { new group, push to stack, level up one
+	 // { new group, push to stack, level up one
 	 // } close last opened group, level down one
 	 // , seperates groups on same level
 	 // < opens garbage, then ignore any character that is not >
@@ -22,7 +22,6 @@ int calculate_score(string input) {
 	int level = 0;
 	int score = 0;
 	int garbage = 0;
-
 
 	for (int i = 0; i < input.size(); i++) {
 		if (input[i] == '!') {
@@ -72,6 +71,5 @@ int main() {
 	calculate_score("{{<!!>},{<!!>},{<!!>},{<!!>}}");
 	calculate_score("{{<a!>},{<a!>},{<a!>},{<ab>}}");
 	*/
-
 }
 
