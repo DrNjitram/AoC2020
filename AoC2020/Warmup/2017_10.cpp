@@ -15,13 +15,15 @@ void twist(int circle[], int size, int pinch_start, int pinch_length) {
 	}
 }
 
+
+
 void init(int arr[], int size) {
 	for (int i = 0; i < size; i++) {
 		arr[i] = i;
 	}
 }
 
-string knotHash(int circle[], int size) {
+string knotHash(int circle[]) {
 	stringstream stream;
 	for (int i = 0; i < 256; i += 16) {
 		stream << hex << (circle[i] ^ circle[i + 1] ^ circle[i + 2] ^ circle[i + 3] ^ circle[i + 4] ^ circle[i + 5] ^ circle[i + 6] ^ circle[i + 7] ^ circle[i + 8] ^
@@ -34,6 +36,11 @@ int main() {
 	const int size = 256;
 	int circle [size];
 	init(circle, size);
+
+	vector<int> circle2;
+	for (int i = 0; i < size; i++)
+		circle2.push_back(i);
+	
 
 	string s = "206,63,255,131,65,80,238,157,254,24,133,2,16,0,1,3";
 
@@ -60,5 +67,5 @@ int main() {
 		}
 	}
 
-	cout << knotHash(circle, size) << endl;
+	cout << knotHash(circle) << endl;
 }

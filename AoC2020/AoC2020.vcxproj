@@ -19,9 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Warmup\2017_10.cpp" />
+    <ClCompile Include="days\2020_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="input\2020_1.txt" />
+    <Text Include="Warmup\input\day11_2017.txt" />
+    <Text Include="Warmup\input\day12_2017.txt" />
     <Text Include="Warmup\input\day8_2017.txt" />
     <Text Include="Warmup\input\day9_2017.txt" />
   </ItemGroup>
