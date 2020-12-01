@@ -7,12 +7,13 @@
 #include <fstream>
 #include <chrono> 
 #include <set>
+#include <unordered_map>
 
 using namespace std;
 
-void solutionvect(vector<int> numbers) {
+int solutionvect(vector<int> numbers) {
 	int answer1;
-	int answer2;
+
 	int min = 9999;
 	int target1;
 	int target2;
@@ -23,14 +24,6 @@ void solutionvect(vector<int> numbers) {
 	}
 
 	min = 2020 - min;
-
-	for (int& val : numbers) {
-		if (val <= min) {
-			second_numbers.push_back(val);
-		}
-	}
-
-	numbers = second_numbers;
 
 	for (int& val1 : numbers) {
 		if (val1 > min) continue;
@@ -48,7 +41,7 @@ void solutionvect(vector<int> numbers) {
 			target2 = 2020 - val1 - val2;
 			for (int& val3 : numbers) {
 				if (val3 == target2) {
-					answer2 = val1 * val2 * val3;
+					return val1 * val2 * val3;
 				}
 			}
 
@@ -61,7 +54,46 @@ void solutionvect(vector<int> numbers) {
 	//cout << (answer2 == 157667328) << endl;
 }
 
-void solutionset(set<int> numbers) {
+int solutionmap(unordered_map<int, int> numbersmap) {
+	int answer1 = 0;
+	int answer2 = 0;
+	int target1 = 0;
+	int target2 = 0;
+
+	int min = 2020 - min_element(numbersmap.begin(), numbersmap.end(),
+		[](const auto& l, const auto& r) { return l.first < r.first; }) -> second;
+
+
+	for (const auto& x : numbersmap) {
+		if (x.first > min) continue;
+
+		target1 = 2020 - x.first;
+
+		if (numbersmap.find(target1) != numbersmap.end()) {
+			answer1 = x.first * target1;
+		}
+		else {
+			for (const auto& x2 : numbersmap) {
+				if (x.first + x2.first > min) continue;
+
+				target2 = 2020 - x.first - x2.first;
+				 
+				if (numbersmap.find(target2) != numbersmap.end())
+					return x.first * x2.first * target2;
+			}
+		}
+	}
+
+
+
+	//cout << answer1 << endl;
+	//cout << (answer1 == 437931) << endl;
+	//cout << answer2 << endl;
+	//cout << (answer2 == 157667328) << endl;
+}
+
+
+int solutionset(set<int> numbers) {
 	int answer1;
 	int answer2;
 	int target1;
@@ -70,13 +102,6 @@ void solutionset(set<int> numbers) {
 
 	int min = 2020 - *numbers.begin();
 
-	for (const int& val : numbers) {
-		if (val <= min) {
-			second_numbers.insert(val);
-		}
-	}
-
-	numbers = second_numbers;
 
 	for (const int& val : numbers) {
 		if (val > min) continue;
@@ -95,7 +120,7 @@ void solutionset(set<int> numbers) {
 			target2 = 2020 - val - val2;
 
 			if (numbers.find(target2) != numbers.end())
-				answer2 = val * val2 * target2;
+				return val * val2 * target2;
 		}
 	}
 
@@ -105,7 +130,6 @@ void solutionset(set<int> numbers) {
 	//cout << (answer2 == 157667328) << endl;
 }
 
-
 int main() {
 
 	ifstream input("C:\\Users\\Martijn\\Desktop\\AoC2020\\AoC2020\\input\\2020_1.txt");
@@ -114,14 +138,16 @@ int main() {
 	buffer << input.rdbuf();
 	istringstream is(buffer.str());
 
-	set<int> numberss;
 	vector<int> numbersv;
+	unordered_map<int, int> numbersmap;
+	set<int> numberss;
 
 	int n;
-	int iters = 100;
+	int iters = 1;
 
 	while (is >> n) {
 		numbersv.push_back(n);
+		numbersmap.insert(pair<int, int>(n, 0));
 		numberss.insert(n);
 	}
 
@@ -140,6 +166,20 @@ int main() {
 
 	start = chrono::high_resolution_clock::now();
 	
+	for (int i = 0; i < iters; i++) {
+		solutionmap(numbersmap);
+	}
+
+	stop = chrono::high_resolution_clock::now();
+
+	duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+
+
+	cout << "Map: " << duration.count() / iters << endl;
+
+	start = chrono::high_resolution_clock::now();
+
 	for (int i = 0; i < iters; i++) {
 		solutionset(numberss);
 	}
