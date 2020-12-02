@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="days\2020_1.cpp">
+    <ClCompile Include="days\2020_2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,5 +28,6 @@
     <Text Include="Warmup\input\day11_2017.txt" />
     <Text Include="Warmup\input\day12_2017.txt" />
     <Text Include="input\2020_1.txt" />
+    <Text Include="input\2020_2.txt" />
   </ItemGroup>
 </Project>
