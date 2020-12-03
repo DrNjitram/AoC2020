@@ -14,7 +14,6 @@ int part1(smatch sm) {
 
     string character = sm[3];
 
-
     string password = sm[4];
 
     int count = 0;
@@ -37,12 +36,7 @@ int part2(smatch sm) {
     string character = sm[3];
     string password = sm[4];
 
-    int result = 0;
-
-    if (password[pos1 - 1] == character[0]) result ^= 1;
-    if (password[pos2 - 1] == character[0]) result ^= 1;
-
-    return result;
+    return (password[pos1 - 1] == character[0]) ^ (password[pos2 - 1] == character[0]);
 }
 
 int main() {
@@ -61,10 +55,6 @@ int main() {
 
             smatch sm;
             regex_match(x, sm, rule);
-
- 
-
-  
 
             valid1 += part1(sm);
             valid2 += part2(sm);
