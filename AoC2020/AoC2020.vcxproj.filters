@@ -18,11 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="days\2020_3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Warmup\input\day8_2017.txt" />
     <Text Include="Warmup\input\day9_2017.txt" />
     <Text Include="Warmup\input\day11_2017.txt" />
@@ -30,5 +25,11 @@
     <Text Include="input\2020_1.txt" />
     <Text Include="input\2020_2.txt" />
     <Text Include="input\2020_3.txt" />
+    <Text Include="input\2020_4.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="days\2020_4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

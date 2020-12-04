@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <regex>
-
+#include <chrono>
 
 using namespace std;
 
@@ -10,7 +10,6 @@ const int height = 323; //323
 const int width = 31; //31
 
 int find_trees(bool map[width][height], int angle_x, int angle_y) {
-
 	int pos[2] = { 0, 0 };
 
 	int trees = 0;
@@ -47,17 +46,27 @@ int main() {
 		}
 	}
 
+	auto start = chrono::high_resolution_clock::now();
+
 	unsigned int result1 = find_trees(map, 1, 1);
 	unsigned int result2 = find_trees(map, 3, 1);
 	unsigned int result3 = find_trees(map, 5, 1);
 	unsigned int result4 = find_trees(map, 7, 1);
 	unsigned int result5 = find_trees(map, 1, 2);
 
+	auto stop = chrono::high_resolution_clock::now();
+
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+	cout << duration.count() << endl;
+
+	/*
 	cout << result1 << endl;
 	cout << result2 << endl;
 	cout << result3 << endl;
 	cout << result4 << endl;
 	cout << result5 << endl;
+	*/
 
 	unsigned long long result = result1 * result2 * result3 * result4 * result5;
 
