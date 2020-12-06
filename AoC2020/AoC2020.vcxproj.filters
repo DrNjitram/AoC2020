@@ -27,5 +27,11 @@
     <Text Include="input\2020_3.txt" />
     <Text Include="input\2020_4.txt" />
     <Text Include="input\2020_5.txt" />
+    <Text Include="input\2020_6.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="days\2020_6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
