@@ -24,7 +24,7 @@ struct bag {
 regex rule("((\\d+)? ?(\\w+ \\w+)) bag");
 smatch sm;
 
-vector<bag> rules;
+map<string, bag> rules;
 set<string> answers;
 
 string name_tar = "shiny gold";
@@ -51,9 +51,7 @@ void print_bag(bag b) {
 }
 
 bag get_bag(string name) {
-	for (bag b : rules)
-		if (b.name == name)
-			return b;
+	return rules.find(name)->second;
 }
 
 bool find_bag(vector<bag> bags, string tar) {
@@ -64,7 +62,8 @@ bool find_bag(vector<bag> bags, string tar) {
 }
 
 void resursive_search(string name) {
-	for (bag b : rules) {
+	for (pair<string, bag> p : rules) {
+		bag b = p.second;
 		if (find_bag(b.contains, name)) {
 			answers.insert(b.name);
 			if (answers.find(b.name) != answers.end())
@@ -77,10 +76,7 @@ int part2_search(string name) {
 	int temp = 0;
 	bag curr_bag;
 
-	for (bag b : rules) {
-		if (b.name == name)
-			curr_bag = b;
-	}
+	curr_bag = rules.find(name)->second;
 
 	int part2 = 0;
 	for (int i = 0; i < curr_bag.contains.size(); i++) {
@@ -89,7 +85,7 @@ int part2_search(string name) {
 
 		temp += curr_bag.amounts[i] * part2_search(b.name);
 
-		print_bag(b); cout << temp << endl;
+		//print_bag(b); cout << temp << endl;
 
 	}
 	return 1 + temp;
@@ -123,16 +119,17 @@ int main() {
 			}
 
 
-			rules.push_back(curr_bag);
+			rules.insert(pair<string, bag>(curr_bag.name, curr_bag));
 			curr_bag = bag();
 		}
 	}
 
-
+	auto start = chrono::high_resolution_clock::now();
 
 	int i = 0;
-	for (bag b : rules) {
-		cout << ++i << endl;
+	for (pair<string, bag> p : rules) {
+		bag b = p.second;
+		//cout << ++i << endl;
 
 		if (find_bag(b.contains, name_tar)) {
 
@@ -144,7 +141,19 @@ int main() {
 	}
 	cout << "Part 1: " << answers.size() << endl;
 	
+	auto stop = chrono::high_resolution_clock::now();
 
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
 
-	cout << part2_search(name_tar) - 1 << endl;
+	cout << "Part 1: " << duration.count() << endl;
+
+	start = chrono::high_resolution_clock::now();
+
+	cout << "Part 2: " << part2_search(name_tar) - 1 << endl;
+
+	stop = chrono::high_resolution_clock::now();
+
+	duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+	cout << "Part 2: " << duration.count() << endl;
 }
