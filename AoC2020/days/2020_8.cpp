@@ -25,24 +25,17 @@ void zero_visits() {
 	}
 }
 
-pair<int, int> run_program(int n) {
+pair<int, int> run_program() {
 	zero_visits();
 	int acc = 0;
 	int instrpnt = 0;
-	int nop_jmp_cnt = 0;
+
 
 	while (check_postion(instrpnt)) {
 		visits[instrpnt]++;
 
-		int instr = instruction[instrpnt];
-		if (instr != 0) {
-			if (nop_jmp_cnt == n) {
-				instr = instr == 1 ? 2 : 1;
-			}
-			nop_jmp_cnt++;
-		}
 
-		switch (instr) {
+		switch (instruction[instrpnt]) {
 			case 0:
 				acc += arguments[instrpnt];
 				instrpnt++;
@@ -87,17 +80,32 @@ int main() {
 		visits.push_back(0);
 	}
 
-	cout << "Part 1: " << run_program(-1).second << endl;;
+	
+	auto start = chrono::high_resolution_clock::now();
+
+	cout << "Part 1: " << run_program().second << endl;;
 
 	pair<int, int> result;
-	int change = 0;
-	do {
 
-		result = run_program(change++);
+	int last_change = 0;
+	do {
+		while (instruction[last_change] == 0) last_change++;
+		instruction[last_change] = instruction[last_change] == 1 ? 2 : 1;
+
+		result = run_program();
+
+		instruction[last_change] = instruction[last_change] == 1 ? 2 : 1;
+		last_change++;
 
 	} while (result.first < instruction.size());
 	
 
 	cout << "Part 2: " << result.second << endl;
+
+	auto stop = chrono::high_resolution_clock::now();
+
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+	cout << "Time(us): " << duration.count() << endl;
 
 }
