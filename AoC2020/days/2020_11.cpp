@@ -31,10 +31,26 @@ bool inField(int c, int r) {
 vector<int> get_neighbours(int c, int r) {
 	vector<int> result(3);
 
-	for (int i = 0; i < 8; ++i)
-		if (inField(c + y[i], r + x[i]))
-			result[seats[c + y[i]][r + x[i]]]++;
+	for (int i = 0; i < 8; ++i) {
+		if (inField(c + y[i], r + x[i])) {
 
+			int add = 1;
+			while (true) {
+				
+				int seat = seats[c + (add * y[i])][r + (add * x[i])];
+				if (seat != 0) {
+					result[seat]++;
+					break;
+				}
+				else {
+					add++;
+				}
+
+				if(!inField(c + (add * y[i]), r + (add * x[i]))) break;
+			}
+			
+		}	
+	}
 	return result;
 }
 
@@ -42,7 +58,7 @@ int get_new_value(int c, int r) {
 	vector<int> neigh = get_neighbours(c, r);
 
 	if (seats[c][r] == 1 && neigh[2] == 0) { change = true; return 2; }
-	if (seats[c][r] == 2 && neigh[2] >= 4) { change = true; return 1; }
+	if (seats[c][r] == 2 && neigh[2] >= 5) { change = true; return 1; }
 	
 	return seats[c][r];
 }
@@ -94,12 +110,16 @@ int main() {
 		}
 	}
 
+	auto start = chrono::high_resolution_clock::now();
+	//print_seats();
+
 	do {
 		change = false;
 		iterate();	
 	} while (change);
 
-	print_seats();
+	//print_seats();
+
 
 	int result = 0;
 	for (int i = 0; i < height; i++) {
@@ -109,10 +129,9 @@ int main() {
 	}
 	cout << result << endl;
 
-	
-	//2103 too low
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
 
-	// 2310 hamster
-	// 2118
+	cout << "Time(us): " << duration.count() << endl;
 
 }
