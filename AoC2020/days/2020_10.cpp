@@ -47,17 +47,12 @@ int main() {
 	adapters.push_back(adapters[adapters.size() - 1] + 3);
 	
 	
-
-	
 	part1();
 
 	//return 0;
 
-	adapters.push_back(0);
-	adapters.push_back(0);
-	adapters.push_back(0);
 	
-	const int size = 94 + 2 + 3;
+	const int size = 94 + 2;
 
 	unsigned long long int ways[size];
 
@@ -66,11 +61,13 @@ int main() {
 	}
 
 	ways[0] = 1;
+	ways[1] = 1;
+	ways[2] = 2;
 
-	for (int i = 0; i < adapters.size()-3; i++) {
-		if (adapters[i + 1] - adapters[i] < 4) ways[i + 1] += ways[i];
-		if (adapters[i + 2] - adapters[i] < 4) ways[i + 2] += ways[i];
-		if (adapters[i + 3] - adapters[i] < 4) ways[i + 3] += ways[i];
+	// if there are N ways to get to i, then each value reachable from i, also gets N paths
+	for (int i = 3; i < size; i++) {
+		ways[i] = ways[i - 3] + ways[i - 2] + ways[i - 1];
 	}
-	cout << ways[size-4] << endl;
+	//1157018619904
+	cout << ways[95] << endl;
 }

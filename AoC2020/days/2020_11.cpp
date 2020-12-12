@@ -69,14 +69,6 @@ void iterate() {
 		for (int j = 0; j < width; j++) {
 			if (seats[i][j] == 0) temp_seats[i][j] = 0;
 			else temp_seats[i][j] = get_new_value(i, j);
-
-			/*
-			if (i == 0) {
-				vector<int> test = get_neighbours(i, j);
-				for (int& v : test) cout << v;
-				cout << endl;
-			}
-			*/
 		}
 	}
 
