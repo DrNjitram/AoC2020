@@ -48,11 +48,11 @@ int main() {
 
 	auto start = chrono::high_resolution_clock::now();
 
-	unsigned int result1 = find_trees(map, 1, 1);
-	unsigned int result2 = find_trees(map, 3, 1);
-	unsigned int result3 = find_trees(map, 5, 1);
-	unsigned int result4 = find_trees(map, 7, 1);
-	unsigned int result5 = find_trees(map, 1, 2);
+	unsigned long long result1 = find_trees(map, 1, 1);
+	unsigned long long result2 = find_trees(map, 3, 1);
+	unsigned long long result3 = find_trees(map, 5, 1);
+	unsigned long long result4 = find_trees(map, 7, 1);
+	unsigned long long result5 = find_trees(map, 1, 2);
 
 	auto stop = chrono::high_resolution_clock::now();
 
@@ -60,13 +60,13 @@ int main() {
 
 	cout << duration.count() << endl;
 
-	/*
+	
 	cout << result1 << endl;
 	cout << result2 << endl;
 	cout << result3 << endl;
 	cout << result4 << endl;
 	cout << result5 << endl;
-	*/
+	
 
 	unsigned long long result = result1 * result2 * result3 * result4 * result5;
 

@@ -50,7 +50,6 @@ int main() {
 		else if (x == 'W') way_pos[0] -= value;
 		else if (x == 'L') rotate(value);
 		else if (x == 'R') rotate(-1 * value);
-	
 	}
 
 	cout << abs(ship_pos[0]) + abs(ship_pos[1]) << endl;
