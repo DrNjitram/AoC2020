@@ -35,32 +35,22 @@ void rotate(int degrees) {
 int main() {
 	ifstream input("C:\\Users\\Martijn\\Desktop\\AoC2020\\AoC2020\\input\\2020_12.txt");
 
-	stringstream buffer;
-	buffer << input.rdbuf();
-	istringstream is(buffer.str());
+	char x;
+	int value;
 
-	string x;
+	while (input >> x >> value){
 
-	vector<pair<char, int>> instructions;
-
-	while (is >> x) 
-		instructions.push_back(pair<char, int>(x[0], stoi(x.substr(1, x.length()))));
-	
-
-	for (pair<char, int> p : instructions) {
-
-		if (p.first == 'F') {
-			ship_pos[0] += p.second * way_pos[0];
-			ship_pos[1] += p.second * way_pos[1];
+		if (x == 'F') {
+			ship_pos[0] += value * way_pos[0];
+			ship_pos[1] += value * way_pos[1];
 		}
-		else if (p.first == 'N') way_pos[1] += p.second;
-		else if (p.first == 'E') way_pos[0] += p.second;
-		else if (p.first == 'S') way_pos[1] -= p.second;
-		else if (p.first == 'W') way_pos[0] -= p.second;
-		else if (p.first == 'L') rotate(p.second);
-		else if (p.first == 'R') rotate(-1 * p.second);
-		
-
+		else if (x == 'N') way_pos[1] += value;
+		else if (x == 'E') way_pos[0] += value;
+		else if (x == 'S') way_pos[1] -= value;
+		else if (x == 'W') way_pos[0] -= value;
+		else if (x == 'L') rotate(value);
+		else if (x == 'R') rotate(-1 * value);
+	
 	}
 
 	cout << abs(ship_pos[0]) + abs(ship_pos[1]) << endl;

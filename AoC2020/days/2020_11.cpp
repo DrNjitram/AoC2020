@@ -33,22 +33,17 @@ vector<int> get_neighbours(int c, int r) {
 
 	for (int i = 0; i < 8; ++i) {
 		if (inField(c + y[i], r + x[i])) {
-
 			int add = 1;
-			while (true) {
-				
+			while (true) {		
 				int seat = seats[c + (add * y[i])][r + (add * x[i])];
 				if (seat != 0) {
 					result[seat]++;
 					break;
 				}
-				else {
-					add++;
-				}
-
+				else add++;	
+				
 				if(!inField(c + (add * y[i]), r + (add * x[i]))) break;
-			}
-			
+			}	
 		}	
 	}
 	return result;
