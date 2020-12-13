@@ -8,7 +8,6 @@
 #include <iterator>
 #include <map>
 #include <set>
-#include <math.h>
 
 using namespace std;
 
