@@ -9,44 +9,65 @@
 #include <map>
 #include <set>
 #include <bitset>
+#include <numeric>
 
 using namespace std;
 
-string mask;
-map<int, unsigned long long> memory;
+map<unsigned long long, unsigned long long> memory;
 
 int bits = 36;
 
-void apply_mask(int index, unsigned long long value) {
-	unsigned long long result = 0;
+vector<string> permutate(string mask) {
+	vector<string> permutations;
+	permutations.push_back(mask);
 
-	//cout << index << endl;
-	//cout << value << endl;
-	//cout << bitset<64>(value) << endl;
-	//cout << mask << endl;
+	bool finish = false;
+
+	while (!finish) {
+		finish = true;
+		int size = permutations.size();
+		for (int j = 0; j < size; j++) {
+			string s = permutations[j];
+			for (int i = 0; i < s.size(); i++) {
+				if (s[i] == 'X') {
+					finish = false;				
+					s[i] = '1';
+					permutations.push_back(s);
+					s[i] = '0';
+					permutations[j] = s;
+				}
+			}
+		}
+	}
+
+	return permutations;
+}
+
+
+string apply_mask(string mask, unsigned long long index) {
+	string result = "000000000000000000000000000000000000";
 
 	for (int i = 0; i < bits; i++) {
-		//cout << endl << i << endl;
-		unsigned long long bit = 0;
-		//cout << !!(value & ((static_cast<unsigned long long>(1) << (bits - i - 1)))) << endl;
-		if (mask[i] == 'X') { 
-			//cout << "X" << endl; 
-			bit = !!(value & ((static_cast<unsigned long long>(1) << (bits - i - 1))));
-		}
-		else { 
-			//cout << (mask[i] - '0') << endl; 
-			bit = !!(static_cast<unsigned long long>(mask[i] - '0'));
-		}
+		char bit;
 
-		//cout << bit << endl;
-		result |= bit << (bits - i - 1);
-		//cout << bitset<64>(result) << endl;
+		if (mask[i] == 'X') bit = 'X';	
+		else if(mask[i] == '1') bit = '1';	
+		else bit = '0' + !!(index & ((1LL << (bits - i - 1))));
 
+		result[i] = bit;
 	}
-	//cout << bitset<36>(result) << endl << endl;
 
+	return result;
+}
+
+void write_mem(unsigned long long adress, unsigned long long value, string mask) {
+	string result = apply_mask(mask, adress);
 	
-	memory[index] = result;
+	vector<string> perms = permutate(result);
+
+	for (string mask : perms) 
+		memory[bitset<36>(mask).to_ullong()] = value;
+	
 }
 
 int main() {
@@ -54,30 +75,23 @@ int main() {
 
 	string key;
 	char equals;
+	string mask;
 	string value;
 
-	int c = 0;
+	auto start = chrono::high_resolution_clock::now();
+
 	while (input >> key >> equals >> value) {
 		if (key.compare("mask") == 0) mask = value;
-		else apply_mask(stoi(key.substr(4, key.size() - 2)), stoull(value));
-		c++;
-		//if (c >10) break;
+		else write_mem(stoull(key.substr(4, key.size() - 2)), stoull(value), mask);
 	}
 
-	unsigned long long sum = 0;
-	for (pair<int, unsigned long long> p : memory) {
+	unsigned long long result = accumulate(memory.cbegin(), memory.cend(), 0LL, [](auto a, auto b) { return a + b.second; });
 
-		sum += p.second;
-		cout << p.first << ": " << bitset<64>(p.second)  << ", " << p.second << endl;
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
 
-	}
-	cout << sum << endl;
+	cout << result << endl;
 
-	// 27900215415 too low
-
-	// hamster 11179633149677 
-	//		   85732624109
-	//		   27900213843
-	//		   84683524267
-
+	cout << "Time(us): " << duration.count() << endl;
 }
+
