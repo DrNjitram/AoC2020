@@ -21,16 +21,24 @@ int main() {
 	int i = 0;
 	int last_said;
 
-	while (is >> last_said) 
-		turns[last_said] = pair<int, int>(++i, 0);	
+	while (is >> last_said)
+		turns[last_said] = pair<int, int>(++i, 0);
 
-	int turn_limit = 2021;
-	
+	int turn_limit = 30000001;
+
+	auto start = chrono::high_resolution_clock::now();
+
 	for (int i = turns.size() + 1; i < turn_limit; i++) {
-		last_said = turns[last_said].second == 0 ? 0 : turns[last_said].first - turns[last_said].second;
-		if (i % 100000 == 0) cout << i << endl;
+		pair<int, int> p = turns[last_said];
+		last_said = p.second == 0 ? 0 : p.first - p.second;
+		//if (i % 100000 == 0) cout << i << endl;
 		turns[last_said] = pair<int, int>(i, turns[last_said].first);
 	}
 
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
+
 	cout << last_said << endl;
+
+	cout << "Time(ss): " << duration.count() << endl;
 }
