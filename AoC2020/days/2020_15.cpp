@@ -25,7 +25,6 @@ int main() {
 	while (is >> last_said)
 		turns[last_said] = pair<int, int>(++i, 0);
 
-
 	auto start = chrono::high_resolution_clock::now();
 
 	int turn_limit = 30000001;
