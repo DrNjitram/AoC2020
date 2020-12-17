@@ -20,11 +20,9 @@ vector<pair<pair<int, int>, pair<int, int>>> checks;
 int arr[20][236];
 
 bool verify(int x) {
-
-	for (pair<pair<int, int>, pair<int, int>> check : checks) {
-		//cout << x << check.first.first << check.first.second << check.second.first << check.second.second << endl;
+	for (pair<pair<int, int>, pair<int, int>> check : checks) 
 		if ((x >= check.first.first && x <= check.first.second)|| (x >= check.second.first && x <= check.second.second)) return true;
-	}
+	
 	return false;
 }
 
@@ -74,7 +72,6 @@ int main() {
 			col = 0;
 		}
 	}
-	
 
 	map<int, set<int>> fields;
 
