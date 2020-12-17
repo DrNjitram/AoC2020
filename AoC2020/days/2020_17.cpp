@@ -17,13 +17,20 @@ using namespace std;
 using Tuple = tuple<int, int, int, int>;
 using Pair = pair<Tuple, bool>;
 
-struct key_hash
-{
-	std::size_t operator()(const Tuple& k) const
-	{
-		return std::get<0>(k) ^ std::get<1>(k) ^ std::get<2>(k) ^ std::get<3>(k);
+struct key_hash {
+	size_t operator()(const Tuple& k) const{
+		size_t h = 0;
+
+		h ^= hash<int>{}(get<0>(k)) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash<int>{}(get<1>(k)) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash<int>{}(get<2>(k)) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash<int>{}(get<3>(k)) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		
+		return h;
 	}
 };
+
+
 
 unordered_map<Tuple, bool, key_hash> pocket_dimension;
 
