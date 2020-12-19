@@ -42,9 +42,11 @@
     <Text Include="input\2020_16_2.txt" />
     <Text Include="input\2020_16_3.txt" />
     <Text Include="input\2020_17.txt" />
+    <Text Include="input\2020_18.txt" />
+    <Text Include="input\2020_19.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="days\2020_17.cpp">
+    <ClCompile Include="days\2020_19.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

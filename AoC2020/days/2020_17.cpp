@@ -31,7 +31,6 @@ struct key_hash {
 };
 
 
-
 unordered_map<Tuple, bool, key_hash> pocket_dimension;
 
 
@@ -53,12 +52,12 @@ void do_cycle() {
 		}
 	}
 
-	for (Pair p : pocket_dimension) {
+	for (const Pair& p : pocket_dimension) {
 		if (!p.second) continue;
 		if (neigh_fill[p.first] == 2 || neigh_fill[p.first] == 3) new_dim[p.first] = true;
 	}
 
-	for (pair<Tuple, int> p : neigh_fill) {
+	for (const pair<Tuple, int>& p : neigh_fill) {
 		if (p.second != 3) continue;
 
 		unordered_map<Tuple, bool, key_hash>::iterator it = pocket_dimension.find(p.first);
