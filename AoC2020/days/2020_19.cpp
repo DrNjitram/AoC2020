@@ -107,6 +107,11 @@ int main() {
 		}
 		rules[rule_no] = p;
 	}
+
+	// 0: 8 11
+	// 8: 42 +
+	// 11: 42+ 31+
+	// (42)*x 31*y
 	
 	auto start = chrono::high_resolution_clock::now();
 
@@ -160,7 +165,7 @@ int main() {
 			}
 
 		}
-		if (no_2 - no_1 > 0) answer2++;
+		if (no_2 > no_1) answer2++;
 	}
 
 
