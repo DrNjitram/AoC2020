@@ -18,9 +18,6 @@ using Pair = pair<vector<int>, vector<int>>;
 
 unordered_map<int, Pair> rules;
 
-
-
-
 vector<string> combine_v(vector<string> v1, vector<string> v2) {
 	if (v1.size() == 0) return v2;
 	vector<string> result;
@@ -74,7 +71,7 @@ int main() {
 
 	while (getline(input, x)) {
 		if (x.compare("") == 0) break;
-		cout << x << endl;
+		//cout << x << endl;
 
 		int rule_no;
 
@@ -110,22 +107,68 @@ int main() {
 		}
 		rules[rule_no] = p;
 	}
+	
+	auto start = chrono::high_resolution_clock::now();
 
-	vector<string> valid = rule_search(0);
-	set<string> valid_s;
+	vector<string> bit1 = rule_search(42);
+	vector<string> bit2 = rule_search(31);
 
-	for (string s : valid) {
-		valid_s.insert(s);
-	}
+	set<string> b1_s;
+	size_t size_b1 = bit1[0].length();
+	for (string s : bit1) b1_s.insert(s);
+
+	set<string> b2_s;
+	size_t size_b2 = bit2[0].length();
+	for (string s : bit2) b2_s.insert(s);
 
 	int answer = 0;
+	int answer2 = 0;
 	while (getline(input, x)) {
-		cout << x << endl;
-		
-		if (valid_s.find(x) != valid_s.end()) answer++;
+		if (b1_s.find(x.substr(0, size_b1)) != b1_s.end()) {
+			if (b1_s.find(x.substr(size_b1, size_b1)) != b1_s.end()) {
+				if (b2_s.find(x.substr(size_b1 * 2, x.length())) != b2_s.end()) answer++;
+			}
+		}
+		else {
+			continue;
+		}
 
+		int no_1 = 0;
+		while (true) {
+			if (b2_s.find(x.substr(x.length() - size_b2, size_b2)) != b2_s.end()) {
+				no_1++;
+				x = x.substr(0, x.length() - size_b2);
+			}
+			else {
+				break;
+			}
+
+		}
+		if (no_1 == 0) continue;
+
+		int no_2 = 0;
+		while (true) {
+			if (b1_s.find(x.substr(x.length() - size_b1, size_b1)) != b1_s.end()) {
+				no_2++;
+
+				if (x.length() == size_b1) break;
+				x = x.substr(0, x.length() - size_b1);
+				
+			}
+			else {
+				break;
+			}
+
+		}
+		if (no_2 - no_1 > 0) answer2++;
 	}
+
+
+
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
 	cout << answer << endl;
+	cout << answer2 - 1<< endl;
+	cout << "Time(us): " << duration.count() << endl;
 }
-// limited length of solutions
-//so limited recursion
