@@ -215,13 +215,13 @@ int main() {
 			cur_data = next_tile.data;
 
 			if (get<1>(next_id) == 0) {
-				cur_data = rotate(cur_data, 3);
+				cur_data = rotate(cur_data, 2);
 			}
 			else if (get<1>(next_id) == 1) {
-				cur_data = rotate(cur_data, 1);
+				cur_data = rotate(cur_data, 0);
 			}
-			else if (get<1>(next_id) == 4) {
-				cur_data = rotate(cur_data, 2);
+			else if (get<1>(next_id) == 3) {
+				cur_data = rotate(cur_data, 1);
 			}
 
 			if (get<2>(next_id)) {
@@ -263,16 +263,17 @@ int main() {
 
 		cur_data = next_tile.data;
 
-		if (get<1>(next_id) == 0) {
-			cur_data = rotate(cur_data, 3);
-		}
-		else if (get<1>(next_id) == 1) {
+		if (get<1>(next_id) == 1) {
 			cur_data = rotate(cur_data, 1);
 		}
-		else if (get<1>(next_id) == 4) {
+		else if (get<1>(next_id) == 2) {
+			cur_data = rotate(cur_data, 0);
+		}
+		else if (get<1>(next_id) == 3) {
 			cur_data = rotate(cur_data, 2);
 		}
 
+		//flipped = false;
 		if (get<2>(next_id)) {
 			flipped == flipped ? false : true;
 		}
