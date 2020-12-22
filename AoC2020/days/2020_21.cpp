@@ -97,7 +97,6 @@ int main() {
 						}
 					}
 				}
-
 			}
 			else {
 
@@ -139,18 +138,9 @@ int main() {
 		answer += r.ing.size();
 	}
 
-	vector<string> sorted_allergy;
-
-	for (string s : allergens) {
-		sorted_allergy.push_back(s);
-	}
-
-	sort(sorted_allergy.begin(), sorted_allergy.end());
-
 	string answer2 = "";
-	for (string allergy : sorted_allergy) {
-		answer2 += reverse_combinations[allergy] + ",";
-	}
+	for (string allergy : allergens) answer2 += reverse_combinations[allergy] + ",";
+	
 
 	auto stop = chrono::high_resolution_clock::now();
 	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
