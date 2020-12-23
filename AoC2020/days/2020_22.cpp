@@ -21,30 +21,32 @@ using Tuple = tuple<deque<size_t>, deque<size_t>, bool>;
 using Pair = pair<deque<size_t>, deque<size_t>>;
 
 
-vector<size_t> get_vect(deque<size_t> p1, deque<size_t> p2) {
-	vector<size_t> result;
+string get_string(deque<size_t> p1, deque<size_t> p2) {
+	string hash = "";
 
-	for (size_t i : p1) result.push_back(i);
-	result.push_back(0);
-	for (size_t i : p2) result.push_back(i);
+	string str1(p1.begin(), p1.end());
+	hash += str1;
 
-	return result;
+	hash += "0";
+
+	string str2(p2.begin(), p2.end());
+	hash += str2;
+
+	return hash;
 }
 
-
 Tuple play_game(deque<size_t> p1, deque<size_t> p2, bool recurse) {
-	set<vector<size_t>> rounds;
-	unordered_set<string> previous_rounds;
+	unordered_set<string> rounds;
 
 	while (!(p1.size() == 0 || p2.size() == 0)) {
 
-		const vector<size_t> v = get_vect(p1, p2);
+		string hash = get_string(p1, p2);
 
-		if (rounds.find(v) != rounds.end()) {
+		if (rounds.find(hash) != rounds.end()) {
 			return { p1, p2, true };
 		}
 
-		rounds.insert(v);
+		rounds.insert(hash);
 
 		size_t p1_card = p1[0];
 		size_t p2_card = p2[0];
@@ -98,15 +100,21 @@ int main() {
 		else player2.push_back(stoi(x));
 	}
 
-	Tuple result = play_game(player1, player2, true);
+	auto start = chrono::high_resolution_clock::now();
 
+	Tuple result = play_game(player1, player2, true);
 
 	deque<size_t> winner = get<2>(result) ? get<0>(result) : get<1>(result);
 
-	int answer = 0;
+	size_t answer = 0;
 	for (size_t i = 0; i < winner.size(); i++) {
 		answer += winner[i] * (winner.size() - i);
 	}
+
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
 	cout << answer << endl;
+	cout << "Time(us): " << duration.count() << endl;
 
 }
