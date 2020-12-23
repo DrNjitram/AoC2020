@@ -19,91 +19,56 @@ using namespace std;
 using ULL = unsigned long long;
 
 int main() {
-	string input = "389125467";
+	const string input = "389125467";
 
+	const unsigned long long total_cups = 1000000;
+	//total_cups = 9;
 
-	unsigned long long total_cups = 1000000;
-	deque<unsigned long long> cups;
+	const unsigned long long turns = 10'0;//10'000'000
 
-	for (char& c : input) 
+	vector<unsigned long long> cups;
+	cups.reserve(total_cups);
+
+	const unsigned long long current_cup = 1;
+
+	for (const char& c : input) 
 		cups.push_back(c - (int)'0');
 
-
-	unsigned long long current_cup = 0;
 	
-	cups.resize(total_cups);
+
 	for (unsigned long long i = input.length(); i < total_cups; i++) {
 		cups[i] = i + 1;
 	}
 
-	
-
-	unsigned long long turns = 10000000;
-	turns = 100;
+	rotate(cups.begin(), cups.end() - 1, cups.end());
 
 	auto start = chrono::high_resolution_clock::now();
 
 	for (unsigned long long i = 0; i < turns; i++) {
 		unsigned long long destination_cup_value = (cups[current_cup] - 1);
 		if (destination_cup_value == 0) destination_cup_value = total_cups;
-		unsigned long long destination_cup;
+		unsigned long long destination_cup = 0;
 
 		rotate(cups.begin(), cups.begin() + current_cup, cups.end());
 
-		array<unsigned long long, 3> pickup = {
-			cups[1],
-			cups[2],
-			cups[3]
-		};
+		array<unsigned long long, 3> pickup;
+
+		copy(cups.begin() + 1, cups.begin() + 4, pickup.begin());
 
 		cups.erase(cups.begin() + 1, cups.begin() + 4);
 
-/*
-		unordered_map<unsigned long long, unsigned long long> set_cups;
-
-		
-		for (unsigned long long i = 0; i < total_cups - 3; i++) {
-			set_cups[cups[i]] = i;
-		}
-		
-
-		ULL index = 0;
-		for (deque<ULL>::iterator it = cups.begin(); it != cups.end(); ++it)
-			set_cups[*it] = index++;
-
-		while (true) {
-			unordered_map<unsigned long long, unsigned long long>::iterator it = set_cups.find(destination_cup_value);
-			if (it != set_cups.end()) {
-				destination_cup = it->second;
-				break;
-			}
-			else {
-				destination_cup_value--;
-				if (destination_cup_value < 1) destination_cup_value = total_cups;
-			}
-		}*/
-
-		
-		bool finished = false;
-		while (!finished) {
-			ULL index = 0;
-			for (deque<ULL>::iterator it = cups.begin(); it != cups.end(); ++it, index++) {
-				if (*it == destination_cup_value) {
-					destination_cup = index;
-					finished = true;
-					break;
-				}
-			}
-			if (!finished) {
-				destination_cup_value--;
-				if (destination_cup_value < 1) destination_cup_value = total_cups;
-			}
+		for (int _ = 0; _ < 3; _++) {
+			if (destination_cup_value == pickup[0] ||
+				destination_cup_value == pickup[1] ||
+				destination_cup_value == pickup[2]
+				)destination_cup_value--;
+			if (destination_cup_value == 0) destination_cup_value = total_cups;
 		}
 
+		vector<ULL>::iterator it = find(cups.begin(), cups.end(), destination_cup_value);
+		ULL index = distance(cups.begin(), it);
 
-		cups.insert(cups.begin() + destination_cup + 1, pickup.begin(), pickup.end());
-
-		current_cup = 1;
+		cups.insert(cups.begin() + index + 1, pickup.begin(), pickup.end());
 	}
 
 
@@ -115,6 +80,10 @@ int main() {
 	auto stop = chrono::high_resolution_clock::now();
 	auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
 
+	/*
+	for (ULL ull : cups)
+		cout << ull;
+	cout << endl;*/
 
 	cout << answer << endl;
 	cout << "Time(ms): " << duration.count() << endl;
