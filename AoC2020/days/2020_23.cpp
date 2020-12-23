@@ -16,27 +16,26 @@
 #include <deque>
 
 using namespace std;
-using ULL = unsigned long long;
+
 
 int main() {
 	const string input = "389125467";
 
-	const unsigned long long total_cups = 1000000;
+	const int total_cups = 1000000;
 	//total_cups = 9;
 
-	const unsigned long long turns = 10'0;//10'000'000
+	const int turns = 10'000;//10'000'000
 
-	vector<unsigned long long> cups;
-	cups.reserve(total_cups);
+	vector<int> cups;
 
-	const unsigned long long current_cup = 1;
+	const int current_cup = 1;
 
 	for (const char& c : input) 
 		cups.push_back(c - (int)'0');
 
-	
+	cups.resize(total_cups);
 
-	for (unsigned long long i = input.length(); i < total_cups; i++) {
+	for (int i = input.length(); i < total_cups; i++) {
 		cups[i] = i + 1;
 	}
 
@@ -44,14 +43,14 @@ int main() {
 
 	auto start = chrono::high_resolution_clock::now();
 
-	for (unsigned long long i = 0; i < turns; i++) {
-		unsigned long long destination_cup_value = (cups[current_cup] - 1);
+	for (int i = 0; i < turns; i++) {
+		int destination_cup_value = (cups[current_cup] - 1);
 		if (destination_cup_value == 0) destination_cup_value = total_cups;
-		unsigned long long destination_cup = 0;
+		int destination_cup = 0;
 
-		rotate(cups.begin(), cups.begin() + current_cup, cups.end());
+		//rotate(cups.begin(), cups.begin() + current_cup, cups.end());
 
-		array<unsigned long long, 3> pickup;
+		array<int, 3> pickup;
 
 		copy(cups.begin() + 1, cups.begin() + 4, pickup.begin());
 
@@ -65,15 +64,15 @@ int main() {
 			if (destination_cup_value == 0) destination_cup_value = total_cups;
 		}
 
-		vector<ULL>::iterator it = find(cups.begin(), cups.end(), destination_cup_value);
-		ULL index = distance(cups.begin(), it);
+		vector<int>::iterator it = find(cups.begin(), cups.end(), destination_cup_value);
+		int index = distance(cups.begin(), it);
 
 		cups.insert(cups.begin() + index + 1, pickup.begin(), pickup.end());
 	}
 
 
 
-	unsigned long long answer = 1;
+	int answer = 1;
 	answer *= cups[1];
 	answer *= cups[2];
 
