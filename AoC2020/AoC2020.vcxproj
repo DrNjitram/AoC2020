@@ -38,6 +38,7 @@
     <Text Include="input\2020_21.txt" />
     <Text Include="input\2020_22.txt" />
     <Text Include="input\2020_23.txt" />
+    <Text Include="input\2020_24.txt" />
     <Text Include="input\2020_3.txt" />
     <Text Include="input\2020_4.txt" />
     <Text Include="input\2020_5.txt" />
@@ -51,7 +52,7 @@
     <Text Include="Warmup\input\day9_2017.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="days\2020_23.cpp" />
+    <ClCompile Include="days\2020_24.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
